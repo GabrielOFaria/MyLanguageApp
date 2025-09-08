@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 export default function App() {
   const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ export default function App() {
       <Text style={styles.title}>Login</Text>
 
       <View style={styles.inputBox}>
+        <Icon name="email-outline" size={24} color="#00bfff" style={{ marginRight: 10 }} />
         <TextInput 
           style={styles.input} 
           placeholder="Email" 
@@ -18,6 +20,7 @@ export default function App() {
         />
       </View>
       <View style={styles.inputBox}>
+        <Icon name="lock-outline" size={24} color="#00bfff" style={{ marginRight: 10 }} />
         <TextInput 
           style={styles.input} 
           placeholder="Password" 
@@ -61,8 +64,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    boderWidth: 1,
+    borderWidth: 2,
     borderColor: '#00bfff',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   input: {
     color: '#fff',
