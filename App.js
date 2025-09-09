@@ -12,9 +12,11 @@ import {
   Keyboard
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 export default function App() {
   const [email, setEmail] = useState('');
   const[password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false); 
 
   return (
     <KeyboardAvoidingView
@@ -39,16 +41,33 @@ export default function App() {
         />
       </View>    
       <View style={styles.inputBox}>
-        <Icon name="lock-outline" size={24} color="#00bfff" style={{ marginRight: 10 }} />
-        <TextInput 
-          style={styles.input} 
-          placeholder="Password" 
-          placeholderTextColor={"#8be9fd"}
-          secureTextEntry
-          value={password} 
-          onChangeText={setPassword} 
-        />
-      </View>
+  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+    <Icon
+      name="lock-outline"
+      size={24}
+      color="#00bfff"
+      style={{ marginRight: 10 }}
+    />
+    <TextInput
+      style={[styles.input, { flex: 1 }]}
+      placeholder="Password"
+      placeholderTextColor="#8be9fd"
+      secureTextEntry={!passwordVisible}
+      value={password}
+      onChangeText={setPassword}
+    />
+  </View>
+
+  {/* Eye */}
+  <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+    <Icon
+      name={passwordVisible ? 'eye-off-outline' : 'eye-outline'}
+      size={24}
+      color="#00bfff"
+    />
+  </TouchableOpacity>
+</View>
+
       
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Log in</Text>
@@ -91,6 +110,7 @@ const styles = StyleSheet.create({
     borderColor: '#00bfff',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
     shadowColor: '#00bfff',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
