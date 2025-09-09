@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 export default function App() {
   const [email, setEmail] = useState('');
   const[password, setPassword] = useState('');
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+    <KeyboardAvoidingView
+  style={{ flex: 1 }}
+  behavior={Platform.OS === "ios" ? "padding" : "height"}
+>
+    <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss();}}>
+  <ScrollView
+    contentContainerStyle={{ flexGrow: 1 }}
+    keyboardShouldPersistTaps="handled"
+  >
 
+      <View style={styles.container}>
       <View style={styles.inputBox}>
         <Icon name="email-outline" size={24} color="#00bfff" style={{ marginRight: 10 }} />
         <TextInput 
@@ -18,7 +37,7 @@ export default function App() {
           value={email} 
           onChangeText={setEmail} 
         />
-      </View>
+      </View>    
       <View style={styles.inputBox}>
         <Icon name="lock-outline" size={24} color="#00bfff" style={{ marginRight: 10 }} />
         <TextInput 
@@ -30,6 +49,7 @@ export default function App() {
           onChangeText={setPassword} 
         />
       </View>
+      
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Log in</Text>
       </TouchableOpacity>
@@ -40,6 +60,9 @@ export default function App() {
         Don't have an account? <Text style={styles.signupBold}>Sign up</Text>
       </Text>
     </View>
+  </ScrollView>
+  </TouchableWithoutFeedback>
+</KeyboardAvoidingView>
   )
 }
 
@@ -68,8 +91,14 @@ const styles = StyleSheet.create({
     borderColor: '#00bfff',
     flexDirection: 'row',
     alignItems: 'center',
+    shadowColor: '#00bfff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 25,
+    
   },
   input: {
+    flex: 1,
     color: '#fff',
     fontSize: 18,
   },
@@ -81,6 +110,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
+    shadowColor: '#00bfff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 25,
+    
   },
   buttonText:{
     color: '#fff',
