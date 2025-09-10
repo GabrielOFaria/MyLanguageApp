@@ -14,10 +14,12 @@
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-native": "0.79.5",
+    "react-native-animatable": "^1.4.0",
     "react-native-vector-icons": "^10.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "prettier": "^3.6.2"
   },
   "private": true
 }
