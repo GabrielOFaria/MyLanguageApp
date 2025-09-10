@@ -20,6 +20,8 @@ export default function App() {
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const { width, height } = useWindowDimensions();
+
   const handleLogin = () => {
     if (!email.trim()) {
       alert("Please enter your email");
@@ -46,8 +48,14 @@ export default function App() {
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.container}>
-            <Text style={styles.title}>Welcome Back</Text>
+          <View
+            style={[styles.container, { padding: Math.min(width * 0.05, 20) }]}
+          >
+            <Text
+              style={[styles.title, { fontSize: Math.min(width * 0.1, 40) }]}
+            >
+              Welcome Back
+            </Text>
             <Animatable.View
               animation="fadeInUp"
               duration={1000}
@@ -60,7 +68,10 @@ export default function App() {
                 style={{ marginRight: 10 }}
               />
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  { fontSize: Math.min(width * 0.045, 18) },
+                ]}
                 placeholder="Email"
                 placeholderTextColor={"#8be9fd"}
                 value={email}
@@ -83,7 +94,10 @@ export default function App() {
                   style={{ marginRight: 10 }}
                 />
                 <TextInput
-                  style={[styles.input, { flex: 1 }]}
+                  style={[
+                    styles.input,
+                    { flex: 1, fontSize: Math.min(width * 0.045, 18) },
+                  ]}
                   placeholder="Password"
                   placeholderTextColor="#8be9fd"
                   secureTextEntry={!passwordVisible}
@@ -110,7 +124,10 @@ export default function App() {
               duration={1000}
               style={{ alignItems: "center" }}
             >
-              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <TouchableOpacity
+                style={[styles.button, { width: Math.min(width * 0.75, 400) }]}
+                onPress={handleLogin}
+              >
                 <Text style={styles.buttonText}>Log in</Text>
               </TouchableOpacity>
             </Animatable.View>
@@ -146,6 +163,7 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     width: "100%",
+    maxWidth: 500,
     backgroundColor: "#1a2236",
     borderRadius: 20,
     marginBottom: 20,
