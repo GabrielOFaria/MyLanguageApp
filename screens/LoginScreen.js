@@ -177,17 +177,31 @@ export default function App() {
                 </Animatable.View>
 
                 {/* Links */}
-                <Text style={[styles.link, { marginBottom: linkMargin }]}>
-                  Forgot password?
-                </Text>
-                <Text style={[styles.signup, { fontSize: signupFont }]}>
-                  Don't have an account?{" "}
-                  <Text
-                    style={[styles.signupBold, { fontSize: signupBoldFont }]}
-                  >
-                    Sign up
+                <Animatable.View
+                  animation="fadeInUp"
+                  delay={600}
+                  duration={1000}
+                  style={{ alignItems: "center" }}
+                >
+                  <Text style={[styles.link, { marginBottom: linkMargin }]}>
+                    Forgot password?
                   </Text>
-                </Text>
+                </Animatable.View>
+                <Animatable.View
+                  animation={"fadeInUp"}
+                  delay={800}
+                  duration={1000}
+                  style={{ alignItems: "center" }}
+                >
+                  <Text style={[styles.signup, { fontSize: signupFont }]}>
+                    Don't have an account?{" "}
+                    <Text
+                      style={[styles.signupBold, { fontSize: signupBoldFont }]}
+                    >
+                      Sign up
+                    </Text>
+                  </Text>
+                </Animatable.View>
               </View>
             </ScrollView>
           </TouchableWithoutFeedback>
