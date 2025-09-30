@@ -5,7 +5,7 @@ import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
-export function MainApp() {
+export default function MainApp() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

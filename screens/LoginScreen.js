@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as Animatable from "react-native-animatable";
+import { useNavigation } from "@react-navigation/native";
 import {
   useWindowDimensions,
   KeyboardAvoidingView,
@@ -16,11 +17,12 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export default function App() {
+export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { width, height } = useWindowDimensions();
+  const navigation = useNavigation();
 
   // Responsive sizing
   const titleMarginBottom = Math.min(height * 0.05, 40);
@@ -46,8 +48,13 @@ export default function App() {
       alert("Please enter your password");
       return;
     }
-    alert("Login Successful");
-    // navigation.replace("Home"); // Make sure navigation is set up
+
+    if (email === "test.email@gmail.com" && password === "123456") {
+      alert("Login Successful");
+      navigation.replace("Home");
+    } else {
+      alert("Login Failed");
+    }
   };
 
   return (
