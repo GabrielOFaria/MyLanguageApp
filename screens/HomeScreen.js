@@ -1,5 +1,6 @@
 import React from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import * as DocumentPicker from "expo-document-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   View,
@@ -11,57 +12,59 @@ import {
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      {/* Button Upload */}
-
-      <View style={styles.header}>
-        <Text style={styles.title}>Language Learning</Text>
-        <TouchableOpacity activeOpacity={0.8}>
-          <LinearGradient
-            colors={["#33ccff", "#003366"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradientBorder}
-          >
-            <View style={styles.innerButton}>
-              <Icon
-                name="upload"
-                size={20}
-                color="#fff"
-                style={{ marginRight: 8 }}
-              />
-              <Text style={styles.uploadText}>Upload document</Text>
-            </View>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
-      {/* Recent Document */}
-      <Text style={styles.sectionTitle}>Recent Document</Text>
-      <ScrollView style={styles.docList}>
-        <View style={styles.docItem}>
-          <Icon name="file-pdf-box" size={28} color="#ff5555" />
-          <View style={{ flex: 1, marginLeft: 10 }}>
-            <Text style={styles.docName}>Sample.pdf</Text>
-            <Text style={styles.docPreview}>
-              Our solar system is made up of the Sun and the objects that orbit
-              it...
-            </Text>
-          </View>
-          <Text style={styles.docTime}>12 min</Text>
+    <View style={{ flex: 1 }}>
+      <View style={styles.container}>
+        {/* Button Upload */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Language Learning</Text>
+          <TouchableOpacity activeOpacity={0.8}>
+            <LinearGradient
+              colors={["#33ccff", "#003366"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientBorder}
+            >
+              <View style={styles.innerButton}>
+                <Icon
+                  name="upload"
+                  size={20}
+                  color="#fff"
+                  style={{ marginRight: 8 }}
+                />
+                <Text style={styles.uploadText}>Upload document</Text>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
 
-      <View style={styles.player}>
-        <TouchableOpacity>
-          <Icon name="skip-backward" size={28} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="play-circle" size={48} color="#00bfff" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="skip-forward" size={28} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.playerTime}>0:45 / 12:03</Text>
+        {/* Recent Document */}
+        <Text style={styles.sectionTitle}>Recent Document</Text>
+        <ScrollView style={styles.docList}>
+          <View style={styles.docItem}>
+            <Icon name="file-pdf-box" size={28} color="#ff5555" />
+            <View style={{ flex: 1, marginLeft: 10 }}>
+              <Text style={styles.docName}>Sample.pdf</Text>
+              <Text style={styles.docPreview}>
+                Our solar system is made up of the Sun and the objects that
+                orbit it...
+              </Text>
+            </View>
+            <Text style={styles.docTime}>12 min</Text>
+          </View>
+        </ScrollView>
+
+        <View style={styles.player}>
+          <TouchableOpacity>
+            <Icon name="skip-backward" size={28} color="#fff" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name="play-circle" size={48} color="#00bfff" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name="skip-forward" size={28} color="#fff" />
+          </TouchableOpacity>
+          <Text style={styles.playerTime}>0:45 / 12:03</Text>
+        </View>
       </View>
     </View>
   );
