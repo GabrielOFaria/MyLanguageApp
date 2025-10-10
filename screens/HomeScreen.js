@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import { LinearGradient } from "expo-linear-gradient";
@@ -10,14 +11,46 @@ import {
   ScrollView,
 } from "react-native";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
+  const [text, setText] = useState("");
+  const handleUpload = async () => {
+    try {
+      const res = await DocumentPicker.getDocumentAsync({
+        type: "application/pdf",
+        copyToCacheDirectory: true,
+      });
+      if (res.type === "success") {
+        const formData = new FormData();
+        formData.append("pdf", {
+          uri: res.uri,
+          name: res.name,
+          type: "application/pdf",
+        });
+        const response = await fetch("http://10.0.2.2:3000/upload", {
+          method: "POST",
+          body: formData,
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        const data = await response.json();
+        console.log("Text extracted:", data.text);
+        setText(data.text);
+        navigation.navigate("Reader", { text: data.text });
+      }
+    } catch (error) {
+      console.log("Error uploading document:", error);
+    }
+  };
+  const handleWordPress = (word) => {
+    alert(`You tapped: ${word}`);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
         {/* Button Upload */}
         <View style={styles.header}>
           <Text style={styles.title}>Language Learning</Text>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity activeOpacity={0.8} onPress={handleUpload}>
             <LinearGradient
               colors={["#33ccff", "#003366"]}
               start={{ x: 0, y: 0 }}
@@ -37,20 +70,27 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Recent Document */}
         <Text style={styles.sectionTitle}>Recent Document</Text>
-        <ScrollView style={styles.docList}>
-          <View style={styles.docItem}>
-            <Icon name="file-pdf-box" size={28} color="#ff5555" />
-            <View style={{ flex: 1, marginLeft: 10 }}>
-              <Text style={styles.docName}>Sample.pdf</Text>
-              <Text style={styles.docPreview}>
-                Our solar system is made up of the Sun and the objects that
-                orbit it...
-              </Text>
-            </View>
-            <Text style={styles.docTime}>12 min</Text>
-          </View>
+        <ScrollView
+          style={{ flex: 1, backgroundColor: "#0f1624", padding: 20 }}
+        >
+          {text ? (
+            <Text style={{ color: "#fff", fontSize: 18, lineHeight: 28 }}>
+              {text.split(" ").map((word, index) => (
+                <Text
+                  key={index}
+                  style={{ color: "#8be9fd" }}
+                  onPress={() => handleWordPress(word)}
+                >
+                  {word + " "}
+                </Text>
+              ))}
+            </Text>
+          ) : (
+            <Text style={{ color: "#888", textAlign: "center" }}>
+              No document sent yet
+            </Text>
+          )}
         </ScrollView>
 
         <View style={styles.player}>
