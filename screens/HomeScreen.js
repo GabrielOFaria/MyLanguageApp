@@ -3,6 +3,7 @@ import { useState } from "react";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import { LinearGradient } from "expo-linear-gradient";
+import { Platform } from "react-native";
 import {
   View,
   Text,
@@ -15,31 +16,46 @@ export default function HomeScreen({ navigation }) {
   const [text, setText] = useState("");
   const handleUpload = async () => {
     try {
+      console.log("Abrindo DocumentPicker...");
       const res = await DocumentPicker.getDocumentAsync({
         type: "application/pdf",
-        copyToCacheDirectory: true,
       });
-      if (res.type === "success") {
+      console.log("Resultado do picker:", res);
+
+      if (!res.canceled) {
+        const file = res.assets ? res.assets[0] : res;
+        console.log("Arquivo selecionado:", file);
+
         const formData = new FormData();
-        formData.append("pdf", {
-          uri: res.uri,
-          name: res.name,
-          type: "application/pdf",
+        formData.append("file", {
+          uri:
+            Platform.OS === "ios" ? file.uri.replace("file://", "") : file.uri,
+          name: file.name || "document.pdf",
+          type: file.mimeType || "application/pdf",
         });
-        const response = await fetch("http://10.0.2.2:3000/upload", {
+
+        const response = await fetch("http://192.168.15.15:3000/upload", {
           method: "POST",
           body: formData,
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            Accept: "application/json",
+          },
         });
+
         const data = await response.json();
-        console.log("Text extracted:", data.text);
-        setText(data.text);
-        navigation.navigate("Reader", { text: data.text });
+        console.log("Resposta do servidor:", data);
+
+        if (data && data.text) {
+          navigation.navigate("Reader", { text: data.text });
+        } else {
+          console.log("Nenhum texto retornado do servidor");
+        }
       }
     } catch (error) {
-      console.log("Error uploading document:", error);
+      console.error("Erro no upload:", error);
     }
   };
+
   const handleWordPress = (word) => {
     alert(`You tapped: ${word}`);
   };
